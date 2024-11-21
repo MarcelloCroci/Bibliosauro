@@ -5,14 +5,15 @@
     src: local('Funny Hippo Personal Use Regular'), url('../file/FunnyHippoPersonalUse-axK2K.woff') format('woff');
 }
 body{
-    background-color: white;
-
+    background-color: #ffffff;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    padding: 10px 5px;
 }
 aside{
     height:calc(100% - 20px);
     position: fixed;
     border-radius: 10px;
-    background-color: crimson;
+    background-color: #ca3e6b;
     width: 250px;
     top: 0px;
     margin-top: 10px;
@@ -22,19 +23,66 @@ aside a{
     display: block;
     text-decoration: none;
     color: white;
-    padding: 10px 20px;
+    padding: 15px 30px;
 }
 aside h3{
     font-family:'Funny Hippo Personal Use Regular';
     font-weight:normal;
-    font-size:28px;
+    font-size:32px;
     text-align: center;
     color: white;
-
+    margin-top: 65px;
+}
+aside img{
+    width: 70px;
+    position: fixed;
+    margin-left: 90px;
 }
 .logout{
     margin-top: 500px;
 }
 section{
     margin-left: 270px;
+}
+form{
+    flex-wrap: nowrap;
+    height: auto;
+    padding-bottom: 15px;
+    border-bottom: solid 1px #dfdfdf;
+    margin-bottom: 20px;
+}
+.filter{
+    width: auto;
+    padding: 15px 20px;
+    border-radius: 25px;
+    background-color: #f4f5f7;
+    border: none;
+}
+.search{
+    border: none;
+    border-radius: 30px;
+    width: 20px;
+    padding: 15px;
+    background-color: #ca3e6b;
+    margin-left: 5px;
+    cursor: pointer;
+}
+.libro{
+    background-color: #f4f5f7;
+    border: none;
+    border-radius: 15px;
+    height: auto;
+    width: 250px;
+    cursor: pointer;
+    padding: 1px 20px 7px 20px;
+}
+.libro:hover{
+    background-color: #c0e3de;
+}
+.libro h4{
+    text-align: center;
+}
+.libro img{
+    width: 200px;
+    margin-left: calc(50% - 100px);
 }
