@@ -4,3 +4,37 @@
     font-weight: normal;
     src: local('Funny Hippo Personal Use Regular'), url('../file/FunnyHippoPersonalUse-axK2K.woff') format('woff');
 }
+body{
+    background-color: white;
+
+}
+aside{
+    height:calc(100% - 20px);
+    position: fixed;
+    border-radius: 10px;
+    background-color: crimson;
+    width: 250px;
+    top: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+aside a{
+    display: block;
+    text-decoration: none;
+    color: white;
+    padding: 10px 20px;
+}
+aside h3{
+    font-family:'Funny Hippo Personal Use Regular';
+    font-weight:normal;
+    font-size:28px;
+    text-align: center;
+    color: white;
+
+}
+.logout{
+    margin-top: 500px;
+}
+section{
+    margin-left: 270px;
+}
