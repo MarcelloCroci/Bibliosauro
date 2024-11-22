@@ -39,7 +39,8 @@ aside img{
     margin-left: 90px;
 }
 .logout{
-    margin-top: 500px;
+    position: fixed;
+    bottom: 30px;
 }
 section{
     margin-left: 270px;
@@ -50,6 +51,7 @@ form{
     padding-bottom: 15px;
     border-bottom: solid 1px #dfdfdf;
     margin-bottom: 20px;
+    
 }
 .filter{
     width: auto;
@@ -64,7 +66,6 @@ form{
     width: 20px;
     padding: 15px;
     background-color: #ca3e6b;
-    margin-left: 5px;
     cursor: pointer;
 }
 .libro{
@@ -75,6 +76,7 @@ form{
     width: 250px;
     cursor: pointer;
     padding: 1px 20px 7px 20px;
+    float: left;
 }
 .libro:hover{
     background-color: #c0e3de;
