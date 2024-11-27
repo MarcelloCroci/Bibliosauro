@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Biblioteca</title>
 </head>
 <body>
@@ -14,22 +14,45 @@
         <a href="#">Biblioteca</a>
         <a href="#">Statistiche</a>
         <a href="#">About Us</a>
-        <a href="#" class="logout">Logout</a>
+        <a href="#" class="logout">Login</a>
     </aside>
     <header>
         
     </header>
     <section>
-        <form action="">
+        <form>
+            <select id="generi" class="filter">
+                <option value="">Genere</option>
+                <!-- I generi verranno caricati dinamicamente -->
+            </select>
             <input class="filter" type="text" id="cercaID" placeholder="Cerca...">
-            <img class="search" src="../file/search.png" alt="Cerca">
+            <input type="image" class="search" src="../file/search.png" alt="Cerca">
         </form>
-        <div class="libro">
+        <div id="libri-table">
+
+        </div>
+        <!-- <div class="libro">
             <h4>Titolo</h4>
             <img src="" alt="Copertina">
             <p>Dettagli</p>
-        </div>
+        </div> -->
     </section>
+
+    <!-- Modal -->
+    <div id="bookModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <img id="modalImage" src="" alt="Copertina" />
+            <p id="modalDescription"></p>
+            <p><strong>ISBN:</strong> <span id="modalISBN"></span></p>
+            <p><strong>Genere:</strong> <span id="modalGenre"></span></p>
+            <p><strong>Quantità:</strong> <span id="modalQuantity"></span></p>
+            <p><strong>Popolarità:</strong> <span id="modalPopularity"></span></p>
+        </div>
+    </div>
+
     
+    <script src="../js/home.js"></script>
 </body>
 </html>
