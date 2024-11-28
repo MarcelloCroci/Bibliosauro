@@ -17,7 +17,7 @@ $(document).ready(function () {
     });
     // Mostra i libri nella pagina
     function loadBooks() {
-        $.get("/api/librigeneri", function (data) {
+        $.get("/api/libri", function (data) {
             data.forEach(function (book) {
                 let bookHTML = `
                     <div class="libro" data-id="${book.id_libro}">
@@ -30,7 +30,7 @@ $(document).ready(function () {
 
             // Gestisci il clic su un libro
             $(".libro").click(function () {
-                let bookId = $(this).data("id_libro");
+                let bookId = $(this).data("l.id_libro");
                 $.get(`/api/libro/${bookId}`, function (book) {
                     // Popola il modal con le informazioni del libro
                     $('#modalTitle').text(book.titolo);
