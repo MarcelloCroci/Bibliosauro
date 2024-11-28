@@ -129,3 +129,21 @@ form{
     text-decoration: none;
     cursor: pointer;
 }
+.testoAboutUs{
+    background-color: #f4f5f7;
+    border: none;
+    border-radius: 15px;
+    height: auto;
+    width: 225px;
+    padding: 1px 20px 7px 20px;
+    /* float:inline-start; */
+    display:inline-table;
+    margin: 3px;
+}
+.imgAboutUs{
+    /* position: absolute; */
+    border-radius: 200px;
+    width: 200px;
+    border:#ca3e6b solid 5px;
+    
+}
