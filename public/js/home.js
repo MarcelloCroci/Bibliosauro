@@ -17,7 +17,7 @@ $(document).ready(function () {
     });
     // Mostra i libri nella pagina
     function loadBooks() {
-        $.get("/api/libri", function (data) {
+        $.get("/api/librigeneri", function (data) {
             data.forEach(function (book) {
                 let bookHTML = `
                     <div class="libro" data-id="${book.id_libro}">

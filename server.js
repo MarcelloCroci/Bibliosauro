@@ -44,6 +44,17 @@ app.get('/api/libri', async (req, res) => {
         res.status(500).send('Server error');
     }
 });
+// Endpoint per ottenere i libri
+app.get('/api/librigeneri', async (req, res) => {
+    try {
+        const result = await 
+        pool.query('SELECT * FROM libri AS l JOIN libri_generi AS lg ON l.id_libro = lg.id_libro JOIN generi AS g ON lg.id_genere = g.id_genere');
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Errore nel recupero dei libro:', err);
+        res.status(500).send('Server error');
+    }
+});
 
 //select libro by id
 app.get('/api/libro/:id', async (req, res) => {

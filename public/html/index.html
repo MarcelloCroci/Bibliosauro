@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- AwesomeFonts -->
     <link rel="stylesheet" href="../css/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Biblioteca</title>
@@ -26,7 +27,8 @@
                 <!-- I generi verranno caricati dinamicamente -->
             </select>
             <input class="filter" type="text" id="cercaID" placeholder="Cerca...">
-            <input type="image" class="search" src="../file/search.png" alt="Cerca">
+            <i class="fa-solid fa-magnifying-glass search"></i>
+            <!-- <input type="image" class="search" src="../file/search.png" alt="Cerca"> -->
         </form>
         <div id="libri-table">
 
@@ -36,7 +38,10 @@
             <img src="" alt="Copertina">
             <p>Dettagli</p>
         </div> -->
+
+        <i class="fa-solid fa-plus add"></i>
     </section>
+
 
     <!-- Modal -->
     <div id="bookModal" class="modal">

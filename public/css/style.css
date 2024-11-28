@@ -65,10 +65,22 @@ form{
 .search{
     border: none;
     border-radius: 30px;
-    width: 20px; 
     padding: 15px;
     background-color: #ca3e6b;
     cursor: pointer;
+    color: #ffffff;
+}
+.add{
+    border: none;
+    border-radius: 40px;
+    padding: 20px 21px;
+    font-size: 20px;
+    background-color: #ca3e6b;
+    cursor: pointer;
+    color: #ffffff;
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
 }
 .libro{
     background-color: #f4f5f7;
