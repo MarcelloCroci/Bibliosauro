@@ -6,13 +6,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- AwesomeFonts -->
     <link rel="stylesheet" href="../css/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="icon" type="image/x-icon" href="../file/Bibliodino.png">
     <title>Biblioteca</title>
 </head>
 <body>
     <aside>
-        <img src="../file/Bibliodino.png" id="dino" alt="Logo">
-        <audio id="audioPlayer" src="../file/Rawr.mp3"></audio>
+        <img src="../file/Bibliodino.png" alt="Logo">
         <h3>BIBLIOSAURO</h3>
         <a href="#">Biblioteca</a>
         <a href="#">Statistiche</a>
@@ -84,7 +82,7 @@
                     <td class="right"><span id="modalPopularity"></span></td>
                 </tr>
             </table>
-            <input class="submit" id="edit-submit" type="button" value="Modifica">
+            <input class="edit-submit" type="button" value="Modifica">
 
         </div>
     </div>
@@ -164,7 +162,7 @@
                         </td>
                     </tr>
                 </table>
-                <input class="submit" id="add-submit" type="button" value="Aggiungi">
+                <input class="add-submit" type="button" value="Aggiungi">
             </form>
             
         </div>
@@ -247,25 +245,12 @@
                         </td>
                     </tr>
                 </table>
-                <input id="delete-submit" type="button" value="Elimina">
-                <input class="submit" id="save-submit" type="button" value="Salva">
+                <input class="delete-submit" type="button" value="Elimina">
+                <input class="save-submit" type="button" value="Salva">
             </form>
             
         </div>
     </div>
-
-
-
-
-
-    <script>
-        document.getElementById("dino").addEventListener("click", function () {
-            const audio = document.getElementById("audioPlayer");
-            audio.play();
-        });
-
-        
-    </script>
 
     <script src="../js/home.js"></script>
 </body>
