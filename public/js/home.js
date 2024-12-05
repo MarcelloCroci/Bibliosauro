@@ -245,4 +245,109 @@ $(document).ready(function () {
 
     });
     
+
+/* -------------------------------------------------------prova isloggedin---------------------------------------------------------------------------------------------------*/
+    /* Funzione per il pulsante Dashboard */
+    document.addEventListener("DOMContentLoaded", () => {
+        const navbarDynamicContent = document.getElementById("navbarDynamicContent");
+    
+        // Simula lo stato di autenticazione (modifica questa logica secondo il tuo sistema di autenticazione)
+        const isAuthenticated = localStorage.getItem("isLoggedIn") === "true";
+
+        if (isAuthenticated) {
+            // Crea il pulsante Dashboard
+            const dashboardButton = document.createElement("button");
+            dashboardButton.className = "btn btn-nav mx-1";
+            dashboardButton.type = "button";
+            dashboardButton.textContent = "Dashboard";
+            dashboardButton.onclick = () => {
+                window.location.href = "dashboard.html";
+            };
+            // Aggiungi il pulsante Dashboard alla navbar
+            navbarDynamicContent.appendChild(dashboardButton);
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const navbarDynamicContent = document.getElementById("navbarDynamicContent");
+        const dropdownMenuLink = document.getElementById("dropdownMenuLink");
+        const dropdownMenu = dropdownMenuLink.nextElementSibling;
+
+        // Verifica se l'utente è autenticato
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        if (user) {
+            // Aggiorna il nome nel dropdown
+            dropdownMenuLink.innerHTML = `${user.username} <i class="fa-solid fa-caret-down" style="margin-left: 5px;"></i>`;
+
+            // Svuota il menu esistente
+            dropdownMenu.innerHTML = "";
+
+            // Aggiungi l'opzione "Opzioni"
+            const optionsItem = document.createElement("li");
+            const optionsLink = document.createElement("a");
+            optionsLink.className = "dropdown-item";
+            optionsLink.href = "options.html";
+            optionsLink.textContent = "Opzioni";
+            optionsItem.appendChild(optionsLink);
+            dropdownMenu.appendChild(optionsItem);
+            
+            // Aggiungi l'opzione "Logout"
+            const logoutItem = document.createElement("li");
+            const logoutLink = document.createElement("a");
+            logoutLink.className = "dropdown-item";
+            logoutLink.href = "#";
+            logoutLink.textContent = "Logout";
+            logoutLink.onclick = () => {
+                localStorage.removeItem("user");
+                alert("Logout eseguito con successo");
+                location.reload();
+            };
+            logoutItem.appendChild(logoutLink);
+            dropdownMenu.appendChild(logoutItem);
+            
+            // Aggiungi il pulsante Dashboard
+            const dashboardButton = document.createElement("button");
+            dashboardButton.className = "btn btn-nav mx-1";
+            dashboardButton.type = "button";
+            dashboardButton.textContent = "Dashboard";
+            dashboardButton.onclick = () => {
+                window.location.href = "dashboard.html";
+            };
+            navbarDynamicContent.appendChild(dashboardButton);
+        } else {
+            // Gestione del login
+            async function login(email, password) {
+            try {
+                const response = await fetch("http://localhost:3000/login", {
+                    method: "POST",
+                    headers: {
+                    "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
+                
+                if (response.ok) {
+                    const user = await response.json();
+                    localStorage.setItem("user", JSON.stringify(user));
+                    alert(`Benvenuto, ${user.username}!`);
+                    location.reload();
+                } else {
+                    alert("Credenziali non valide");
+                }
+            } catch (error) {
+                console.error("Errore durante il login:", error);
+                alert("Errore del server");
+            }
+        }
+        
+       // Simula il login con un'email e una password (aggiungi un form per login reale)
+        document.getElementById("loginButton").addEventListener("click", () => {
+            const email = document.getElementById("emailInput").value;
+            const password = document.getElementById("passwordInput").value;
+            login(email, password);
+        });
+        }
+    });
+
 });

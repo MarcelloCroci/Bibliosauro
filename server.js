@@ -18,6 +18,7 @@ const pool = new Pool({
 
 // Serve i file statici dalla cartella 'public'
 app.use(express.static(path.join(__dirname, 'public')));
+app.use("/html", express.static(path.join(__dirname, 'html')));
 
 // Endpoint per la root (che ora restituirà index.html)
 app.get('/', (req, res) => {
