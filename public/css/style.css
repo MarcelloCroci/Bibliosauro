@@ -48,7 +48,7 @@ aside img{
 section{
     margin-left: 270px;
 }
-form{
+section form{
     flex-wrap: nowrap;
     height: auto;
     padding-bottom: 15px;
@@ -61,6 +61,7 @@ form{
     border-radius: 25px;
     background-color: #f4f5f7;
     border: none;
+    font-size: medium;
 }
 .search{
     border: none;
@@ -115,6 +116,30 @@ form{
     border: 1px solid #888;
     width: 80%;
 }
+.login-content {
+    background-color: white;
+    margin: 5% auto 0;
+    padding: 20px;
+    min-width: 300px;
+    border-radius: 25px;
+    background-color: #ca3e6b;
+    width: 30%;
+    text-align: center;
+    font-size: large;
+    color:#ffffff;
+}
+.register-content {
+    background-color: white;
+    margin: 5% auto 0;
+    padding: 20px;
+    min-width: 300px;
+    border-radius: 25px;
+    background-color: #9fd1cb;
+    width: 30%;
+    text-align: center;
+    font-size: large;
+    color:#ffffff;
+}
 
 .close {
     color: #aaa;
@@ -122,6 +147,17 @@ form{
     font-size: 28px;
     font-weight: bold;
 }
+.submit{
+    border: none;
+    border-radius: 40px;
+    padding: 18px 18px;
+    background-color: #ca3e6b;
+    color: #ffffff;
+    font-size: 18px;
+    right: 0px;
+    cursor: pointer;
+  }
+  
 
 .close:hover,
 .close:focus {
