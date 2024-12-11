@@ -180,16 +180,16 @@ app.post('/api/libri', async (req, res) => {
 //UPDATE
 app.put('/api/libro/:id', async (req, res) => {
     const libroId = req.params.id;
-    const { titolo, autore, casa_editrice, anno_pubblicazione, quantita, isbn, immagine, id_genere } = req.body;
+    const { titolo, autore, casa_editrice, anno_pubblicazione, quantita, isbn, immagine, disponibile, id_genere } = req.body;
 
     try {
         // Aggiorna il libro nella tabella `libri`
         const updateQuery = `
             UPDATE libri
-            SET titolo = $1, autore = $2, casa_editrice = $3, anno_pubblicazione = $4, quantita = $5, isbn = $6, immagine = $7
-            WHERE id_libro = $8
+            SET titolo = $1, autore = $2, casa_editrice = $3, anno_pubblicazione = $4, quantita = $5, isbn = $6, immagine = $7, disponibile = $8
+            WHERE id_libro = $9
         `;
-        await pool.query(updateQuery, [titolo, autore, casa_editrice, anno_pubblicazione, quantita, isbn, immagine, libroId]);
+        await pool.query(updateQuery, [titolo, autore, casa_editrice, anno_pubblicazione, quantita, isbn, immagine, disponibile, libroId]);
 
         // Aggiorna il genere nella tabella ponte `libri_generi`
         const deleteBridgeQuery = `DELETE FROM libri_generi WHERE id_libro = $1`;
