@@ -97,14 +97,11 @@ section form{
 }
 
 #delete-submit{
-    border: none;
-    border-radius: 40px;
-    padding: 18px 18px;
     background-color: #f4f5f7;
-    /* color: #ffffff; */
-    font-size: 18px;
-    right: 0px;
-    cursor: pointer;
+    color: black;
+}
+#prenota-submit{
+    background-color: #7ac3ba;
 }
 .libro{
     background-color: #f4f5f7;

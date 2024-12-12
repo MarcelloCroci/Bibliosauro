@@ -96,7 +96,7 @@ $(document).ready(function () {
     }
 
     loadLibri();
-
+    //////////////////////////////////////////////EDIT BUTTON
     $(document).on("click", "#edit-submit", function () {
         const libroId = $(this).closest("#libroModal").data("libro-id"); // Ottieni l'ID del libro
         if (!libroId) return console.error("ID libro non trovato");
@@ -157,7 +157,7 @@ $(document).ready(function () {
         });
     });
 
-    // Gestisci l'eliminazione del libro
+    ///////////////////////////////// Gestisci l'eliminazione del libro
     $(document).on("click", "#delete-submit", function () {
         const libroId = $("#libroModalEdit").data("libro-id");
         if (!confirm("Sei sicuro di voler eliminare questo libro?")) return;
@@ -201,7 +201,7 @@ $(document).ready(function () {
         }
     });
     
-        // Aggiungi evento click al pulsante "Aggiungi"
+        //////////////////////// Aggiungi evento click al pulsante "Aggiungi"
         $("#add-submit").click(function () {
             const libroData = {
                 titolo: $("#titleID").val(),
@@ -239,6 +239,37 @@ $(document).ready(function () {
                 }
             });
         });
+
+        ///////////////////////////////// Aggiungi evento click al pulsante "Prenota"
+    $("#prenota-submit").click(function () {
+        const prenotazioneData = {
+        id_utente: $("#utenteID").val(), // ID dell'utente che effettua la prenotazione
+        id_libro: $("#libroID").val()  // ID del libro da prenotare
+    };
+
+    // Validazione base
+    if (!prenotazioneData.id_utente || !prenotazioneData.id_libro) {
+        alert("Tutti i campi sono obbligatori.");
+        return;
+    }
+
+    // Invia i dati al server per aggiornare la quantità e creare la prenotazione
+    $.ajax({
+        url: "/api/prenotazioni",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(prenotazioneData),
+        success: function (response) {
+            alert("Prenotazione effettuata con successo!");
+            // Aggiorna l'interfaccia utente, ad esempio ricaricando la lista dei libri
+            loadLibri();
+        },
+        error: function (error) {
+            console.error("Errore durante la prenotazione:", error);
+            alert("Errore durante la prenotazione.");
+        }
+    });
+});
     
     
 
