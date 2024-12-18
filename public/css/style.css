@@ -9,6 +9,12 @@ body{
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     padding: 10px 5px;
 }
+#body-login {
+    background: #d5668a;
+}
+#body-register {
+    background: #c0e3de;
+}
 
 aside{
     height:calc(100% - 20px);
@@ -56,6 +62,12 @@ section form{
     padding-bottom: 15px;
     border-bottom: solid 1px #dfdfdf;
     margin-bottom: 20px;
+}
+footer{
+    margin-left: 270px;
+    text-align: center;
+    color: #888;
+    font-size: 13px;
 }
 .filter{
     width: auto;
@@ -236,7 +248,7 @@ section form{
     border-radius: 15px;
     height: auto;
     width: 225px;
-    padding: 1px 20px 7px 20px;
+    padding: 20px;
     /* float:inline-start; */
     /* display:inline-table; */
     text-align: center;
@@ -256,4 +268,14 @@ section form{
 }
 .largo{
     width: 70%;
+}
+
+.general-description{
+    margin: 20px 30px 40px;
+    /* background-color: #f4f5f7; */
+    border-radius: 10px;
+    padding: 5px 25px;
+}
+header h1{
+    color: #7ac3ba;
 }
