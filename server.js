@@ -233,6 +233,49 @@ app.delete('/api/libro/:id', async (req, res) => {
 });
 
 
+//PRENOTAZIONE
+app.post('/api/prenota', async (req, res) => {
+    const { id_libro, id_utente, data_inizio, data_scadenza } = req.body;
+
+    if (!id_libro || !id_utente || !data_inizio || !data_scadenza) {
+        return res.status(400).send("Tutti i campi sono obbligatori.");
+    }
+
+    try {
+        // Verifica la quantità del libro
+        const checkQuery = "SELECT quantita FROM libri WHERE id_libro = $1";
+        const checkResult = await pool.query(checkQuery, [id_libro]);
+
+        if (checkResult.rows.length === 0) {
+            return res.status(404).send("Libro non trovato.");
+        }
+
+        const quantita = checkResult.rows[0].quantita;
+
+        if (quantita <= 0) {
+            return res.status(400).send("Il libro non è disponibile.");
+        }
+
+        // Decrementa la quantità del libro
+        const updateQuery = "UPDATE libri SET quantita = quantita - 1 WHERE id_libro = $1";
+        await pool.query(updateQuery, [id_libro]);
+
+        // Inserisci la prenotazione nella tabella
+        const insertQuery = `
+            INSERT INTO prestiti (id_libro, id_utente, data_inizio, data_scadenza)
+            VALUES ($1, $2, $3, $4)
+        `;
+        await pool.query(insertQuery, [id_libro, id_utente, data_inizio, data_scadenza]);
+
+        res.status(200).send("Prenotazione effettuata con successo.");
+    } catch (error) {
+        console.error("Errore durante la prenotazione:", error);
+        res.status(500).send("Errore durante la prenotazione.");
+    }
+});
+
+
+
 
 
 //LOGIN

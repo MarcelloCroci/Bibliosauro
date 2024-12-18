@@ -9,6 +9,34 @@ $(document).ready(function () {
         }
     );
 
+    const user = JSON.parse(localStorage.getItem("user"));
+
+if (user) {
+    console.log("Dati dell'utente autenticato:", user);
+    // Cambia l'ID del bottone login in logout
+    const loginButton = document.getElementById("login-button");
+    if (loginButton) {
+        loginButton.id = "logout-button"; // Cambia l'ID
+        loginButton.textContent = "Logout"; // Cambia il testo del bottone
+    }
+
+    // Controlla il ruolo dell'utente
+    if (user.ruolo === "utente") {
+        console.log("L'utente è un utente standard. Nascondi i bottoni.");
+
+        // Nascondi i bottoni per la modifica e aggiunta
+        document.querySelectorAll("#edit-submit, .add").forEach((button) => {
+            button.style.display = "none";
+        });
+    } else if (user.ruolo === "admin") {
+        console.log("L'utente è un admin. Nessuna restrizione.");
+    }
+} else {
+    console.log("Nessun utente autenticato.");
+}
+
+    
+
     // Carica i generi
     $.ajax({
         url: '/api/generi',
@@ -230,6 +258,46 @@ $(document).ready(function () {
         $('#libroModalAdd').hide();
         $('#libroModalEdit').hide();
     });
+
+    $("#prenota-submit").click(function () {
+        // Recupera i dati dal modal e dal Local Storage
+        const libroId = $("#libroModal").data("libro-id"); // ID del libro visualizzato
+        const user = JSON.parse(localStorage.getItem("user")); // Dati dell'utente salvati
+        if (!user || !libroId) {
+            alert("Errore: Utente non autenticato o libro non trovato.");
+            return;
+        }
+    
+        // Ottieni la data di inizio (oggi)
+        const today = new Date();
+        const dataInizio = today.toISOString().split("T")[0]; // Format: YYYY-MM-DD
+    
+        // Calcola la data di fine (un mese dopo)
+        const nextMonth = new Date(today.setMonth(today.getMonth() + 1));
+        const dataScadenza = nextMonth.toISOString().split("T")[0]; // Format: YYYY-MM-DD
+    
+        // Invia i dati al server
+        $.ajax({
+            url: "/api/prenota", // Endpoint backend
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+                id_libro: libroId,
+                id_utente: user.id_utente,
+                data_inizio: dataInizio,
+                data_scadenza: dataScadenza
+            }),
+            success: function (response) {
+                alert("Prenotazione effettuata con successo!");
+                $("#libroModal").hide(); // Chiudi il modal
+            },
+            error: function (error) {
+                console.error("Errore durante la prenotazione:", error);
+                alert("Errore durante la prenotazione. Riprova.");
+            }
+        });
+    });
+    
 
     // Chiudi il modal quando si clicca fuori dal modal
     $(window).click(function (event) {
