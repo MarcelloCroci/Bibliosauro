@@ -9,6 +9,7 @@ body{
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     padding: 10px 5px;
 }
+
 aside{
     height:calc(100% - 20px);
     position: fixed;
@@ -85,7 +86,8 @@ section form{
     right: 25px;
 }
 
-.submit{
+
+.submit-btn{
     border: none;
     border-radius: 40px;
     padding: 18px 18px;
