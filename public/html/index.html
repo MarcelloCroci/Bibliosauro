@@ -14,18 +14,21 @@
         <img src="../file/Bibliodino.png" id="dino" alt="Logo">
         <audio id="audioPlayer" src="../file/Rawr.mp3"></audio>
         <h3>BIBLIOSAURO</h3>
-        <a href="#">Biblioteca</a>
+        <a href="../html/index.html">Biblioteca</a>
         <a href="#">Statistiche</a>
-        <a href="#">About Us</a>
-        <a href="#" class="logout">Login</a>
+        <a href="../html/about-us.html">About Us</a>
+        <a href="../html/login.html" class="logout">Login</a>
     </aside>
     
     <section>
         <form>
             <select class="filter" name="ordine" id="ordineID">
-                <option value="popolare">Popolarità</option>
-                <option value="anno">Anno</option>
-                <option value="alfa">Alfabetico</option>
+                <option value="+popolare">+ Popolarità</option>
+                <option value="-popolare">- Popolarità</i></option>
+                <option value="+anno">+ Anno</option>
+                <option value="-anno">- Anno</option>
+                <option value="+alfa">+ Alfabetico</option>
+                <option value="-alfa">- Alfabetico</option>
             </select>
             <span class="filter" style="margin-right: 5px;">
                 <label for="disponibileID">Solo disponibili</label>

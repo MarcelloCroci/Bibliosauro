@@ -90,12 +90,18 @@ app.get('/api/libri', async (req, res) => {
         }
 
         // Gestione dell'ordinamento
-        if (ordine === 'alfa') {
-            queryText += ' ORDER BY l.titolo ASC';
-        } else if (ordine === 'popolare') {
+        if (ordine === '+alfa') {
+            queryText += ' ORDER BY l.titolo DESC';
+        } else if (ordine === '-alfa') {
+            queryText += ' ORDER BY l.popolarita ASC';
+        } else if (ordine === '+popolare') {
+            queryText += ' ORDER BY l.popolarita DESC';
+        } else if (ordine === '-popolare') {
+            queryText += ' ORDER BY l.popolarita ASC';
+        }else if (ordine === '+anno') {
             queryText += ' ORDER BY l.popolarita DESC';
         } else {
-            queryText += ' ORDER BY l.id_libro DESC';
+            queryText += ' ORDER BY l.id_libro ASC';
         }
 
         // Esegui la query
@@ -225,6 +231,70 @@ app.delete('/api/libro/:id', async (req, res) => {
         res.status(500).send("Errore durante l'eliminazione del libro.");
     }
 });
+
+
+
+
+//LOGIN
+app.post('/api/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        return res.status(400).send("Email e password sono obbligatori.");
+    }
+
+    try {
+        // Query per verificare l'utente
+        const query = `
+            SELECT * 
+            FROM utenti 
+            WHERE email = $1 AND password = crypt($2,password)
+        `;
+        const result = await pool.query(query, [email, password]);
+
+        if (result.rows.length > 0) {
+            // Autenticazione riuscita
+            res.status(200).json({ message: "Login avvenuto con successo", user: result.rows[0] });
+        } else {
+            // Autenticazione fallita
+            res.status(401).send("Email o password errati.");
+        }
+    } catch (error) {
+        console.error("Errore durante il login:", error);
+        res.status(500).send("Errore interno al server.");
+    }
+});
+
+//REGISTER
+app.post('/api/register', async (req, res) => {
+    const { nome, cognome, email, password, ruolo } = req.body;
+
+    if (!nome || !cognome || !email || !password) {
+        return res.status(400).send("Tutti i campi sono obbligatori.");
+    }
+
+    try {
+        // Query per inserire un nuovo utente
+        const query = `
+            INSERT INTO utenti (nome, cognome, email, password, ruolo) 
+            VALUES ($1, $2, $3, crypt($4, gen_salt('bf')), $5)
+            RETURNING id_utente
+        `;
+        const result = await pool.query(query, [nome, cognome, email, password, ruolo || "utente"]);
+
+        res.status(201).json({ message: "Registrazione completata", userId: result.rows[0].id_utente });
+    } catch (error) {
+        console.error("Errore durante la registrazione:", error);
+        if (error.code === '23505') {
+            res.status(409).send("L'email è già registrata.");
+        } else {
+            res.status(500).send("Errore interno al server.");
+        }
+    }
+});
+
+
+
 
 
 

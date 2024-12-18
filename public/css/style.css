@@ -30,7 +30,7 @@ aside a:hover{
     text-shadow: 0 0 30px white;
     /* box-shadow: ; */
 }
-aside h3{
+.login-content h3, .register-content h3, aside h3{
     font-family:'Funny Hippo Personal Use Regular';
     font-weight:normal;
     font-size:32px;
@@ -205,3 +205,55 @@ section form{
     min-width: 180px;
 }
 
+.login-content {
+    background-color: white;
+    margin: 5% auto 0;
+    padding: 20px;
+    min-width: 300px;
+    border-radius: 25px;
+    background-color: #ca3e6b;
+    width: 30%;
+    text-align: center;
+    font-size: large;
+    color:#ffffff;
+}
+.register-content {
+    background-color: white;
+    margin: 5% auto 0;
+    padding: 20px;
+    min-width: 300px;
+    border-radius: 25px;
+    background-color: #9fd1cb;
+    width: 30%;
+    text-align: center;
+    font-size: large;
+    color:#ffffff;
+}
+
+.testoAboutUs{
+    background-color: #f4f5f7;
+    border: none;
+    border-radius: 15px;
+    height: auto;
+    width: 225px;
+    padding: 1px 20px 7px 20px;
+    /* float:inline-start; */
+    /* display:inline-table; */
+    text-align: center;
+    margin: 3px 50px;
+}
+.imgAboutUs{
+    /* position: absolute; */
+    border-radius: 200px;
+    width: 200px;
+    margin:0px 75px;
+    border:#ca3e6b solid 5px;
+    /* display: block; */
+}
+.divAboutUs{
+    display:inline-table;
+
+}
+.largo{
+    width: 70%;
+}

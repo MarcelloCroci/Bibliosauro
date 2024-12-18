@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Biblioteca</title>
+</head>
+<body>
+    <div class="register-content">
+        <img src="../file/Bibliodino.png" height="100px" alt="logo">
+        <h3>Bibliosauro</h3>
+        <hr>
+        <p>Registrati!</p>
+        <form>
+            <label for="nome">Nome</label><br><br>
+            <input type="text" name="nome" id="nomeid"
+             style="background-color: #c0e3de;"
+              class="filter largo" maxlength="50"><br><br>
+            <label for="cognome">Cognome</label><br><br>
+            <input type="text" name="cognome" id="cognomeid"
+             style="background-color: #c0e3de;"
+              class="filter largo" maxlength="50"><br><br>
+            <label for="email">Email</label><br><br>
+            <input type="email" name="email" id="emailid"
+             style="background-color: #c0e3de;"
+              class="filter largo" maxlength="100"><br><br>
+            <label for="psw">Password</label><br><br>
+            <input type="password" name="psw" id="pswid"
+             style="background-color: #c0e3de;"
+             class="filter largo" maxlength="255">
+            <br><br>
+            <input type="button" value="Registrati" class="submit-btn" id="register-submit"
+            style="background-color: #d5668a;">
+
+            <p>Hai già un account?
+            <a href="login.html" style="color:#d5668a">Cliccami!</a></p>
+        </form>
+    </div>
+    <script src="../js/register.js"></script>
+</body>
+</html>
