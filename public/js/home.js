@@ -22,10 +22,10 @@ if (user) {
 
     // Controlla il ruolo dell'utente
     if (user.ruolo === "utente") {
-        console.log("L'utente è un utente standard. Nascondi i bottoni.");
+        console.log("L'utente è un utente standard.");
 
         // Nascondi i bottoni per la modifica e aggiunta
-        document.querySelectorAll("#edit-submit, .add").forEach((button) => {
+        document.querySelectorAll("#edit-submit, .add, #stats").forEach((button) => {
             button.style.display = "none";
         });
     } else if (user.ruolo === "admin") {
@@ -33,6 +33,9 @@ if (user) {
     }
 } else {
     console.log("Nessun utente autenticato.");
+    // Nascondi i bottoni per la modifica e aggiunta
+    document.querySelectorAll("#edit-submit, .add, #prenota-submit, #stats").forEach((button) => {
+        button.style.display = "none";});
 }
 
     

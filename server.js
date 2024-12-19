@@ -253,6 +253,8 @@ app.post('/api/prenota', async (req, res) => {
         const quantita = checkResult.rows[0].quantita;
 
         if (quantita <= 0) {
+            const updateQuery = "UPDATE libri SET disponibile = false WHERE id_libro = $1";
+            await pool.query(updateQuery, [id_libro]);
             return res.status(400).send("Il libro non è disponibile.");
         }
 
@@ -337,6 +339,79 @@ app.post('/api/register', async (req, res) => {
 });
 
 
+
+// Endpoint per ottenere i dati degli utenti con i loro prestiti con paginazione
+app.get('/api/statistiche/prestiti', async (req, res) => {
+    try {
+        const { page = 1, limit = 10 } = req.query; // Paginazione con valori di default
+        const offset = (page - 1) * limit;
+
+        const query = `
+            SELECT 
+                u.nome, u.cognome, u.ruolo, 
+                l.titolo AS libro_prestato
+            FROM utenti u
+            LEFT JOIN prestiti p ON u.id_utente = p.id_utente
+            LEFT JOIN libri l ON p.id_libro = l.id_libro
+            WHERE p.restituito = false
+            LIMIT $1 OFFSET $2;
+        `;
+
+        const countQuery = `
+            SELECT COUNT(*) AS total
+            FROM utenti u
+            LEFT JOIN prestiti p ON u.id_utente = p.id_utente
+            WHERE p.restituito = false;
+        `;
+
+        const [result, countResult] = await Promise.all([
+            pool.query(query, [limit, offset]),
+            pool.query(countQuery)
+        ]);
+
+        const total = parseInt(countResult.rows[0].total, 10);
+        res.json({ rows: result.rows, total });
+    } catch (err) {
+        console.error('Errore nel recupero delle statistiche dei prestiti:', err);
+        res.status(500).send('Errore nel recupero delle statistiche dei prestiti');
+    }
+});
+
+// Endpoint per ottenere tutti i dettagli dei libri con paginazione
+app.get('/api/statistiche/libri', async (req, res) => {
+    try {
+        const { page = 1, limit = 10 } = req.query; // Paginazione con valori di default
+        const offset = (page - 1) * limit;
+
+        const query = `
+            SELECT 
+                l.id_libro, l.titolo, l.autore, l.anno_pubblicazione, l.isbn, 
+                l.quantita, l.popolarita, l.disponibile, l.casa_editrice, 
+                array_agg(g.nome_genere) AS generi
+            FROM libri l
+            LEFT JOIN libri_generi lg ON l.id_libro = lg.id_libro
+            LEFT JOIN generi g ON lg.id_genere = g.id_genere
+            GROUP BY l.id_libro
+            LIMIT $1 OFFSET $2;
+        `;
+
+        const countQuery = `
+            SELECT COUNT(*) AS total
+            FROM libri;
+        `;
+
+        const [result, countResult] = await Promise.all([
+            pool.query(query, [limit, offset]),
+            pool.query(countQuery)
+        ]);
+
+        const total = parseInt(countResult.rows[0].total, 10);
+        res.json({ rows: result.rows, total });
+    } catch (err) {
+        console.error('Errore nel recupero dei dettagli dei libri:', err);
+        res.status(500).send('Errore nel recupero dei dettagli dei libri');
+    }
+});
 
 
 

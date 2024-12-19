@@ -36,13 +36,19 @@ aside a:hover{
     text-shadow: 0 0 30px white;
     /* box-shadow: ; */
 }
-.login-content h3, .register-content h3, aside h3{
+aside h3{
     font-family:'Funny Hippo Personal Use Regular';
     font-weight:normal;
     font-size:32px;
     text-align: center;
     color: white;
     margin-top: 65px;
+}
+.login-content h1, .register-content h1{
+    font-family:'Funny Hippo Personal Use Regular';
+    font-weight:normal;
+    text-align: center;
+    color: white;
 }
 aside img{
     width: 70px;
@@ -62,6 +68,10 @@ section form{
     padding-bottom: 15px;
     border-bottom: solid 1px #dfdfdf;
     margin-bottom: 20px;
+}
+section h1{
+    text-align: center;
+    color: #ca3e6b;
 }
 footer{
     margin-left: 270px;
@@ -228,7 +238,7 @@ footer{
 }
 .register-content {
     background-color: white;
-    margin: 5% auto 0;
+    margin: 2% auto 0;
     padding: 20px;
     min-width: 300px;
     border-radius: 25px;
@@ -276,3 +286,32 @@ footer{
 header h1{
     color: #7ac3ba;
 }
+
+
+#utentiPrestiti, #dettagliLibri {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#utentiPrestiti td, #utentiPrestiti th, #dettagliLibri td, #dettagliLibri th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#utentiPrestiti tr:nth-child(even){background-color: #f2f2f2;}
+
+#utentiPrestiti tr:hover {background-color: #ddd;}
+
+#utentiPrestiti th, #dettagliLibri th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #7ac3ba;
+    color: white;
+}
+
+#dettagliLibri tr:nth-child(even){background-color: #f2f2f2;}
+
+#dettagliLibri tr:hover {background-color: #ddd;}
+
