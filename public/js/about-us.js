@@ -14,7 +14,7 @@ if (user) {
         console.log("L'utente è un utente standard.");
 
         // Nascondi i bottoni per la modifica e aggiunta
-        document.querySelector("#stats").forEach((button) => {
+        document.querySelectorAll("#stats").forEach((button) => {
             button.style.display = "none";
         });
     } else if (user.ruolo === "admin") {

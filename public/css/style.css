@@ -10,10 +10,16 @@ body{
     padding: 10px 5px;
 }
 #body-login {
-    background: #d5668a;
+    background: linear-gradient(135deg,#ca3e6b, #7ac3ba);
+    margin: 0;
+    padding: 0;
+    height: 100vh;
 }
 #body-register {
-    background: #c0e3de;
+    background: linear-gradient(135deg,#7ac3ba, #ca3e6b);
+    margin: 0;
+    padding: 0;
+    height: 100vh;
 }
 
 aside{
