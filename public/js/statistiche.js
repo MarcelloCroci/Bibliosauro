@@ -22,13 +22,19 @@ function loadPrestiti(page) {
     $.get(`/api/statistiche/prestiti?page=${page}&limit=${limit}`, function (data) {
         const utentiPrestitiTable = $('#utentiPrestiti tbody');
         utentiPrestitiTable.empty();
+
         data.rows.forEach(row => {
+            const DataPrestato = row.data_inizio.slice(0, 10).split('-').reverse().join('/');
+            const DataRiconsegna = row.data_scadenza.slice(0, 10).split('-').reverse().join('/');
+
             utentiPrestitiTable.append(`
                 <tr>
                     <td>${row.nome}</td>
                     <td>${row.cognome}</td>
                     <td>${row.ruolo}</td>
                     <td>${row.libro_prestato || 'Nessun libro in prestito'}</td>
+                    <td>${DataPrestato}</td>
+                    <td>${DataRiconsegna}</td>
                 </tr>
             `);
         });

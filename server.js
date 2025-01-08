@@ -2,7 +2,8 @@ const express = require('express');
 const { Pool } = require('pg');
 const path = require('path'); // Importa il modulo 'path'
 const app = express();
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const { log } = require('console');
 app.use(express.json()); // Middleware per il parsing dei JSON
 require('dotenv').config();
 
@@ -285,28 +286,45 @@ app.post('/api/login', async (req, res) => {
         return res.status(400).send("Email e password sono obbligatori.");
     }
 
-    const passwordMatch = bcrypt.compare(password,);
-
-    try {
-        // Query per verificare l'utente
-        const query = `
-            SELECT * 
+    try{
+        const preQuery = `
+            SELECT password 
             FROM utenti 
-            WHERE email = $1 AND password = $2
+            WHERE email = $1
         `;
-        const result = await pool.query(query, [email, passwordMatch]);
+        const preResult = await pool.query(preQuery, [email]);
 
-        if (result.rows.length > 0) {
-            // Autenticazione riuscita
-            res.status(200).json({ message: "Login avvenuto con successo", user: result.rows[0] });
-        } else {
-            // Autenticazione fallita
-            res.status(401).send("Email o password errati.");
+        const passwordMatch = await bcrypt.compare(password, preResult.rows[0].password);
+
+        try {
+            // Query per verificare l'utente
+            const query = `
+                SELECT * 
+                FROM utenti 
+                WHERE email = $1
+            `;
+            const result = await pool.query(query, [email]);
+    
+            if(!passwordMatch){return res.status(401).send("Password errata.");}
+    
+            if (result.rows.length > 0) {
+                // Autenticazione riuscita
+                res.status(200).json({ message: "Login avvenuto con successo", user: result.rows[0] });
+            } else {
+                // Autenticazione fallita
+                res.status(401).send("Email o password errati.");
+            }
+        } catch (error) {
+            console.error("Errore durante il login:", error);
+            res.status(500).send("Errore interno al server.");
         }
-    } catch (error) {
-        console.error("Errore durante il login:", error);
+    }catch (error){
+        console.error("Errore durante la decriptazione della password:", error);
         res.status(500).send("Errore interno al server.");
     }
+    
+
+    
 });
 
 //REGISTER
@@ -316,8 +334,9 @@ app.post('/api/register', async (req, res) => {
     if (!nome || !cognome || !email || !password) {
         return res.status(400).send("Tutti i campi sono obbligatori.");
     }
-
-    let passwordhash = bcrypt.hash(password, 10);
+    console.log(password);
+    const passwordhash = await bcrypt.hash(password, 10);
+    console.log(passwordhash);
 
     try {
         // Query per inserire un nuovo utente
@@ -349,8 +368,7 @@ app.get('/api/statistiche/prestiti', async (req, res) => {
 
         const query = `
             SELECT 
-                u.nome, u.cognome, u.ruolo, 
-                l.titolo AS libro_prestato
+                *
             FROM utenti u
             LEFT JOIN prestiti p ON u.id_utente = p.id_utente
             LEFT JOIN libri l ON p.id_libro = l.id_libro
