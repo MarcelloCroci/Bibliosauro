@@ -2,18 +2,15 @@ const express = require('express');
 const { Pool } = require('pg');
 const path = require('path'); // Importa il modulo 'path'
 const app = express();
+const bcrypt = require("bcrypt")
 app.use(express.json()); // Middleware per il parsing dei JSON
 require('dotenv').config();
 
+
+
+
 const pool = new Pool({
-    user: process.env.USER,
-    host: process.env.HOST,
-    database: process.env.DATABASE,
-    password: process.env.PASSWORD,
-    port: process.env.PORT,
-    ssl: {
-        rejectUnauthorized: false,
-    },
+    connectionString: process.env.DATABASE_URL
 });
 
 // Serve i file statici dalla cartella 'public'
@@ -288,14 +285,16 @@ app.post('/api/login', async (req, res) => {
         return res.status(400).send("Email e password sono obbligatori.");
     }
 
+    const passwordMatch = bcrypt.compare(password,);
+
     try {
         // Query per verificare l'utente
         const query = `
             SELECT * 
             FROM utenti 
-            WHERE email = $1 AND password = crypt($2,password)
+            WHERE email = $1 AND password = $2
         `;
-        const result = await pool.query(query, [email, password]);
+        const result = await pool.query(query, [email, passwordMatch]);
 
         if (result.rows.length > 0) {
             // Autenticazione riuscita
@@ -318,14 +317,16 @@ app.post('/api/register', async (req, res) => {
         return res.status(400).send("Tutti i campi sono obbligatori.");
     }
 
+    let passwordhash = bcrypt.hash(password, 10);
+
     try {
         // Query per inserire un nuovo utente
         const query = `
             INSERT INTO utenti (nome, cognome, email, password, ruolo) 
-            VALUES ($1, $2, $3, crypt($4, gen_salt('bf')), $5)
+            VALUES ($1, $2, $3, $4, $5)
             RETURNING id_utente
         `;
-        const result = await pool.query(query, [nome, cognome, email, password, ruolo || "utente"]);
+        const result = await pool.query(query, [nome, cognome, email, passwordhash, ruolo || "utente"]);
 
         res.status(201).json({ message: "Registrazione completata", userId: result.rows[0].id_utente });
     } catch (error) {
