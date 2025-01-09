@@ -9,6 +9,19 @@ body{
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     padding: 10px 5px;
 }
+#body-login {
+    background: linear-gradient(135deg,#ca3e6b, #7ac3ba);
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+#body-register {
+    background: linear-gradient(135deg,#7ac3ba, #ca3e6b);
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
 aside{
     height:calc(100% - 20px);
     position: fixed;
@@ -26,7 +39,8 @@ aside a{
     padding: 15px 30px;
 }
 aside a:hover{
-    color: #d9dadb;
+    text-shadow: 0 0 30px white;
+    /* box-shadow: ; */
 }
 aside h3{
     font-family:'Funny Hippo Personal Use Regular';
@@ -35,6 +49,12 @@ aside h3{
     text-align: center;
     color: white;
     margin-top: 65px;
+}
+.login-content h1, .register-content h1{
+    font-family:'Funny Hippo Personal Use Regular';
+    font-weight:normal;
+    text-align: center;
+    color: white;
 }
 aside img{
     width: 70px;
@@ -55,6 +75,16 @@ section form{
     border-bottom: solid 1px #dfdfdf;
     margin-bottom: 20px;
 }
+section h1{
+    text-align: center;
+    color: #ca3e6b;
+}
+footer{
+    margin-left: 270px;
+    text-align: center;
+    color: #888;
+    font-size: 13px;
+}
 .filter{
     width: auto;
     padding: 15px 20px;
@@ -66,35 +96,74 @@ section form{
 .search{
     border: none;
     border-radius: 30px;
-    width: 20px; 
     padding: 15px;
     background-color: #ca3e6b;
     cursor: pointer;
+    color: #ffffff;
 }
+.add{
+    border: none;
+    border-radius: 40px;
+    padding: 20px 21px;
+    font-size: 20px;
+    background-color: #ca3e6b;
+    cursor: pointer;
+    color: #ffffff;
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+}
+
+
+.submit-btn{
+    border: none;
+    border-radius: 40px;
+    padding: 18px 18px;
+    background-color: #ca3e6b;
+    color: #ffffff;
+    font-size: 18px;
+    right: 0px;
+    cursor: pointer;
+}
+
+#delete-submit{
+    background-color: #f4f5f7;
+}
+#prenota-submit{
+    background-color:#7ac3ba;
+}
+
 .libro{
     background-color: #f4f5f7;
     border: none;
     border-radius: 15px;
     height: auto;
-    width: 225px;
+    width: 250px;
     cursor: pointer;
     padding: 1px 20px 7px 20px;
     /* float:inline-start; */
     display:inline-table;
     margin: 3px;
+    text-align: center;
+
 }
 .libro:hover{
     background-color: #c0e3de;
+    box-shadow: 0 0 20px #888;
 }
-.libro h4{
-    text-align: center;
-}
+
 .libro img{
     max-height: 300px;
-    max-width: 200px;
-    margin-left: calc(50% - 100px);
+    width: 200px;
     border-radius: 10px;
 }
+.autore{
+    margin-top: -20px;
+    color: #888;
+    font-style: italic;
+    font-size: small;
+}
+
 
 /* Modal */
 .modal {
@@ -111,41 +180,27 @@ section form{
 
 .modal-content {
     background-color: white;
-    margin: 15% auto;
+    margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
-}
-.login-content {
-    background-color: white;
-    margin: 5% auto 0;
-    padding: 20px;
-    min-width: 300px;
-    border-radius: 25px;
-    background-color: #ca3e6b;
+    border-radius: 20px;
     width: 30%;
+    margin-top: 50px;
     text-align: center;
-    font-size: large;
-    color:#ffffff;
-}
-.register-content {
-    background-color: white;
-    margin: 5% auto 0;
-    padding: 20px;
     min-width: 300px;
-    border-radius: 25px;
-    background-color: #9fd1cb;
-    width: 30%;
-    text-align: center;
-    font-size: large;
-    color:#ffffff;
+}
+.modal-content img{
+    width: 250px;
+    /* margin-left: calc(50% - 125px); */
+    border-radius: 10px;
+    box-shadow: 1px 1px 50px #888;
 }
 
 .close {
     color: #aaa;
     float: right;
-    font-size: 28px;
-    font-weight: bold;
+    font-size: 24px;
+    /* font-weight: bold; */
 }
 .submit{
     border: none;
@@ -165,13 +220,59 @@ section form{
     text-decoration: none;
     cursor: pointer;
 }
+
+.left{
+    text-align: left;
+}
+.right{
+    text-align: right;
+}
+.table-add{
+    margin: auto;
+    padding-bottom: 30px;
+}
+.table-add td{
+    padding: 5px 20px;
+}
+.table-view{
+    margin: auto; 
+    padding: 25px 0px;
+    width: 70%; 
+    min-width: 180px;
+}
+
+.login-content {
+    background-color: white;
+    margin: 5% auto 0;
+    padding: 20px;
+    min-width: 300px;
+    border-radius: 25px;
+    background-color: #ca3e6b;
+    width: 30%;
+    text-align: center;
+    font-size: large;
+    color:#ffffff;
+}
+.register-content {
+    background-color: white;
+    margin: 2% auto 0;
+    padding: 20px;
+    min-width: 300px;
+    border-radius: 25px;
+    background-color: #9fd1cb;
+    width: 30%;
+    text-align: center;
+    font-size: large;
+    color:#ffffff;
+}
+
 .testoAboutUs{
     background-color: #f4f5f7;
     border: none;
     border-radius: 15px;
     height: auto;
     width: 225px;
-    padding: 1px 20px 7px 20px;
+    padding: 20px;
     /* float:inline-start; */
     /* display:inline-table; */
     text-align: center;
@@ -192,3 +293,42 @@ section form{
 .largo{
     width: 70%;
 }
+
+.general-description{
+    margin: 20px 30px 40px;
+    /* background-color: #f4f5f7; */
+    border-radius: 10px;
+    padding: 5px 25px;
+}
+header h1{
+    color: #7ac3ba;
+}
+
+
+#utentiPrestiti, #dettagliLibri {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#utentiPrestiti td, #utentiPrestiti th, #dettagliLibri td, #dettagliLibri th {
+    /* border: 1px solid #ddd; */
+    padding: 8px;
+}
+
+#utentiPrestiti tr:nth-child(even){background-color: #f2f2f2;}
+
+#utentiPrestiti tr:hover {background-color: #ddd;}
+
+#utentiPrestiti th, #dettagliLibri th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #7ac3ba;
+    color: white;
+}
+
+#dettagliLibri tr:nth-child(even){background-color: #f2f2f2;}
+
+#dettagliLibri tr:hover {background-color: #ddd;}
+

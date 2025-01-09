@@ -3,30 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- AwesomeFonts -->
     <link rel="stylesheet" href="../css/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="../file/Bibliodino.png">
     <title>Biblioteca</title>
 </head>
 <body>
     <aside>
-        <img src="../file/Bibliodino.png" alt="Logo">
+        <img src="../file/Bibliodino.png" id="dino" alt="Logo">
+        <audio id="audioPlayer" src="../file/Rawr.mp3"></audio>
         <h3>BIBLIOSAURO</h3>
         <a href="../html/index.html">Biblioteca</a>
-        <a href="#">Statistiche</a>
+        <a href="../html/statistiche.html" id="stats">Statistiche</a>
         <a href="../html/about-us.html">About Us</a>
-        <a href="../html/login.html" class="logout">Login</a>
+        <a href="../html/login.html" id="login-button" class="logout">Login</a>
     </aside>
-    <header>
-        
-    </header>
+    
     <section>
         <form>
-            <select id="generi" class="filter">
+            <select class="filter" name="ordine" id="ordineID">
+                <option value="+popolare">+ Popolarità</option>
+                <option value="-popolare">- Popolarità</i></option>
+                <option value="+anno">+ Anno</option>
+                <option value="-anno">- Anno</option>
+                <option value="+alfa">+ Alfabetico</option>
+                <option value="-alfa">- Alfabetico</option>
+            </select>
+            <span class="filter" style="margin-right: 5px;">
+                <label for="disponibileID">Solo disponibili</label>
+                <input class="filter" type="checkbox" id="disponibileID">
+            </span>
+            
+            <input class="filter" type="text" id="autoreID" placeholder="Autore">
+
+            <input class="filter" type="text" id="casa_editriceID" placeholder="Casa editrice">
+            <select id="generi" class="filter generi">
                 <option value="">Genere</option>
                 <!-- I generi verranno caricati dinamicamente -->
             </select>
             <input class="filter" type="text" id="cercaID" placeholder="Cerca...">
-            <input type="image" class="search" src="../file/search.png" alt="Cerca">
+            <i class="fa-solid fa-magnifying-glass search"></i>
+            <!-- <input type="image" class="search" src="../file/search.png" alt="Cerca"> -->
         </form>
         <div id="libri-table">
 
@@ -36,23 +54,225 @@
             <img src="" alt="Copertina">
             <p>Dettagli</p>
         </div> -->
+
+        <i class="fa-solid fa-plus add" ></i>
     </section>
 
-    <!-- Modal -->
-    <div id="bookModal" class="modal">
+
+    <!-- Modal Visualizzazione -->
+    <div id="libroModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 id="modalTitle"></h2>
+            <i class="fa-solid fa-xmark close"></i>
+            <h2 id="modalTitle"></h2><p class="autore" id="modalAutor"></p>
             <img id="modalImage" src="" alt="Copertina" />
-            <p id="modalDescription"></p>
-            <p><strong>ISBN:</strong> <span id="modalISBN"></span></p>
-            <p><strong>Genere:</strong> <span id="modalGenre"></span></p>
-            <p><strong>Quantità:</strong> <span id="modalQuantity"></span></p>
-            <p><strong>Popolarità:</strong> <span id="modalPopularity"></span></p>
+            <table class="table-view">
+                <tr>
+                    <td class="left"><strong>Casa editrice:</strong></td>
+                    <td class="right"><span id="modalEditor"></span></td>
+                </tr>
+                <tr>
+                    <td class="left"><strong >Genere:</strong></td>
+                    <td class="right"><span id="modalGenre"></span></td>
+                </tr>
+                <tr>
+                    <td class="left"><strong >ISBN:</strong></td>
+                    <td class="right"><span id="modalISBN"></span></td>
+                </tr>
+                <tr>
+                    <td class="left"><strong >Quantità:</strong></td>
+                    <td class="right"><span id="modalQuantity"></span></td>
+                </tr>
+                <tr>
+                    <td class="left"><strong>Popolarità:</strong></td>
+                    <td class="right"><span id="modalPopularity"></span></td>
+                </tr>
+            </table>
+            <input class="submit-btn" id="edit-submit" type="button" value="Modifica">
+            <input class="submit-btn" id="prenota-submit" type="button" value="Prenota">
+
         </div>
     </div>
 
-    
+    <!-- Modal Creazione -->
+    <div id="libroModalAdd" class="modal">
+        <div class="modal-content" style="width: 35%;">
+            <i class="fa-solid fa-xmark close"></i>
+            <h2 >Aggiunta Libro</h2>
+            <form>
+                <table class="table-add">
+                    <tr>
+                        <td class="left">
+                        <label for="titleID">Titolo</label><br>
+                        </td>
+                        <td class="right">
+                        <input class="filter " type="text" name="title" id="titleID" required><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left">
+                            <label for="autorID">Autore</label><br>
+                        </td>
+                        <td class="right">
+                            <input class="filter " type="text" name="autor" id="autorID" required><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left">
+                            <label for="editorID">Casa editrice</label><br>
+                        </td>
+                        <td class="right">
+                            <input class="filter" type="text" name="editor" id="editorID" required><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left">
+                            <label for="yearID">Anno</label><br>
+                        </td>
+                        <td class="right">
+                            <input class="filter" type="text" name="year" id="yearID" maxlength="4" min="0" required><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left">
+                            <label>Genere</label><br>
+                        </td>
+                        <td class="right">
+                            <select  class="filter generi" id="genreID" style="width: 100%;" required>
+                                <option value="">Seleziona</option>
+                                <!-- I generi verranno caricati dinamicamente -->
+                            </select><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left">
+                            <label for="quantityID">Quantità</label><br>
+                        </td>
+                        <td class="right">
+                            <input class="filter " type="number" name="quantity" id="quantityID" min="1" placeholder="1" required><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left">
+                            <label for="isbnID">ISBN</label><br>
+                        </td>
+                        <td class="right">
+                            <input class="filter " type="text" name="isbn" id="isbnID" maxlength="13" required><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left">
+                            <label for="imageID">Immagine (link)</label><br>
+                        </td>
+                        <td class="right">
+                            <input class="filter " type="text" name="image" id="imageID" required><br>
+                        </td>
+                    </tr>
+                </table>
+                <input class="submit-btn" id="add-submit" type="button" value="Aggiungi">
+            </form>
+            
+        </div>
+    </div>
+
+
+
+    <!-- Modal Modifica -->
+    <div id="libroModalEdit" class="modal">
+        <div class="modal-content" style="width: 35%;">
+            <i class="fa-solid fa-xmark close"></i>
+            <h2 >Modifica Libro</h2>
+            <form>
+                <table class="table-add">
+                    <tr>
+                        <td class="left">
+                        <label for="titleEditID">Titolo</label><br>
+                        </td>
+                        <td class="right">
+                        <input class="filter " type="text" name="title" id="titleEditID" required><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left">
+                            <label for="autorEditID">Autore</label><br>
+                        </td>
+                        <td class="right">
+                            <input class="filter " type="text" name="autor" id="autorEditID" required><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left">
+                            <label for="editorEditID">Casa editrice</label><br>
+                        </td>
+                        <td class="right">
+                            <input class="filter" type="text" name="editor" id="editorEditID" required><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left">
+                            <label for="yearEditID">Anno</label><br>
+                        </td>
+                        <td class="right">
+                            <input class="filter" type="text" name="year" id="yearEditID" maxlength="4" min="0" required><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left">
+                            <label>Genere</label><br>
+                        </td>
+                        <td class="right">
+                            <select  class="filter generi" id="genreEditID" style="width: 100%;" required>
+                                <option value="">Seleziona</option>
+                                <!-- I generi verranno caricati dinamicamente -->
+                            </select><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left">
+                            <label for="quantityEditID">Quantità</label><br>
+                        </td>
+                        <td class="right">
+                            <input class="filter " type="number" name="quantity" id="quantityEditID" min="1" placeholder="1" required><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left">
+                            <label for="isbnEditID">ISBN</label><br>
+                        </td>
+                        <td class="right">
+                            <input class="filter " type="text" name="isbn" id="isbnEditID" maxlength="13" required><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left">
+                            <label for="imageEditID">Immagine (link)</label><br>
+                        </td>
+                        <td class="right">
+                            <input class="filter " type="text" name="image" id="imageEditID" required><br>
+                        </td>
+                    </tr>
+                </table>
+                <input id="delete-submit" class="submit-btn" type="button" value="Elimina">
+                <input class="submit-btn" id="save-submit" type="button" value="Salva">
+            </form>
+            
+        </div>
+    </div>
+
+
+
+
+
+    <script>
+        document.getElementById("dino").addEventListener("click", function () {
+            const audio = document.getElementById("audioPlayer");
+            audio.play();
+        });
+
+        
+    </script>
+
     <script src="../js/home.js"></script>
 </body>
+<footer><p>&copy; 2024 ISII Marconi - Project Bibliosauro. All rights reserved.</p> </footer>
+
 </html>

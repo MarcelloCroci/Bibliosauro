@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- AwesomeFonts -->
     <link rel="stylesheet" href="../css/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <title>Biblioteca</title>
+    <link rel="icon" type="image/x-icon" href="../file/Bibliodino.png">
+    <title>Login</title>
 </head>
-<body>
+<body id="body-login">
     <div class="login-content">
         <img src="../file/Bibliodino.png" height="100px" alt="logo">
-        <h2>Bibliosauro</h2>
+        <h1>Bibliosauro</h1>
         <hr>
-        <p>Log-in/Registrati!</p>
+        
         <form>
             <label for="email">Email</label><br><br>
             <input type="email" name="email" id="emailid"
@@ -23,8 +25,9 @@
              style="background-color: #d5668a;"
              class="filter largo" maxlength="255">
             <br><br>
-            <input type="button" value="Log-in" class="submit" id="login-submit"
+            <input type="button" value="Log-in" class="submit-btn" id="login-submit"
             style="background-color: #9fd1cb;">
+
             <br><br>
             <p>Non hai un account?
             <a href="register.html" style="color:#9fd1cb">Cliccami!</a></p>
@@ -32,4 +35,6 @@
     </div>
     <script src="../js/login.js"></script>
 </body>
+<footer style="margin: auto; color: #9fd1cb;"><p>&copy; 2024 ISII Marconi - Project Bibliosauro. All rights reserved.</p> </footer>
+
 </html>
