@@ -21,6 +21,33 @@ body{
     padding: 0;
     height: 100vh;
 }
+nav{
+    height: 60px;
+    display: none;
+    background-color: #ca3e6b;
+    width: 100%;
+    top: -10px;
+    margin-left: -5px;
+    margin-bottom: 10px;
+}
+nav a{
+    
+    text-decoration: none;
+    color: white;
+    padding: 15px 30px;
+}
+nav h3{
+    font-family:'Funny Hippo Personal Use Regular';
+    font-weight:normal;
+    font-size:32px;
+    color: white;
+    padding: 15px 30px;
+}
+nav img{
+    width: 35px;
+    margin: auto;
+    padding: 10px 10px;
+}
 
 aside{
     height:calc(100% - 20px);
@@ -38,7 +65,7 @@ aside a{
     color: white;
     padding: 15px 30px;
 }
-aside a:hover{
+aside a:hover, nav a:hover{
     text-shadow: 0 0 30px white;
     /* box-shadow: ; */
 }
@@ -321,3 +348,33 @@ header h1{
 
 #dettagliLibri tr:hover {background-color: #ddd;}
 
+/* Nascondere la sidebar e mostrare il burger menu su dispositivi piccoli */
+@media (max-width: 768px) {
+    aside {
+        display: none;
+    }
+    section{
+        margin: auto;
+    }
+    footer{
+        margin: auto;
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+    }
+    #ordineID, #disponibileSpanID, #autoreID, #casa_editriceID, #generi{
+        display: none;
+    }
+    #cercaID{
+        width: 70%;
+        margin: auto;
+    }
+    #libri-table{
+        margin: auto;
+    }
+    .add{
+        position: fixed;
+    }
+}
