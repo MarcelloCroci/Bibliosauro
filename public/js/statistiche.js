@@ -32,7 +32,7 @@ function loadPrestiti(page) {
                     <td>${row.nome}</td>
                     <td>${row.cognome}</td>
                     <td>${row.ruolo}</td>
-                    <td>${row.libro_prestato || 'Nessun libro in prestito'}</td>
+                    <td>${row.titolo || 'Nessun libro in prestito'}</td>
                     <td>${DataPrestato}</td>
                     <td>${DataRiconsegna}</td>
                 </tr>

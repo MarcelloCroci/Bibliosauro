@@ -402,7 +402,7 @@ app.get('/api/statistiche/libri', async (req, res) => {
     try {
         const { page = 1, limit = 10 } = req.query; // Paginazione con valori di default
         const offset = (page - 1) * limit;
-
+        
         const query = `
             SELECT 
                 l.id_libro, l.titolo, l.autore, l.anno_pubblicazione, l.isbn, 
@@ -414,7 +414,6 @@ app.get('/api/statistiche/libri', async (req, res) => {
             GROUP BY l.id_libro
             LIMIT $1 OFFSET $2;
         `;
-
         const countQuery = `
             SELECT COUNT(*) AS total
             FROM libri;
@@ -440,4 +439,56 @@ app.get('/api/statistiche/libri', async (req, res) => {
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
+});
+
+
+// Endpoint per ottenere le prenotazioni attive di un singolo utente
+app.get('/api/prenotazioni/attive/:id_utente', async (req, res) => {
+    console.log(idUtente)
+
+    try {
+        const query = `
+            SELECT p.id_prestito, l.titolo AS libro, p.data_inizio, p.data_scadenza
+            FROM prestiti p
+            JOIN libri l ON p.id_libro = l.id_libro
+            WHERE p.id_utente = $1 AND p.restituito = false
+            ORDER BY p.data_scadenza ASC;
+        `;
+        const result = await pool.query(query, [idUtente]);
+        
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Nessuna prenotazione attiva trovata per questo utente.' });
+        }
+
+        res.status(200).json(result.rows);
+    } catch (err) {
+        console.error('Errore nel recupero delle prenotazioni attive:', err);
+        res.status(500).send('Errore nel recupero delle prenotazioni attive.');
+    }
+});
+    
+
+// Endpoint per ottenere le prenotazioni precedenti di un singolo utente
+app.get('/api/prenotazioni/precedenti/:id_utente', async (req, res) => {
+
+    try {
+        const query = `
+            SELECT p.id_prestito, l.titolo AS libro, p.data_inizio, p.data_conclusione
+            FROM prestiti p
+            JOIN libri l ON p.id_libro = l.id_libro
+            WHERE p.id_utente = $1 AND p.restituito = true
+            ORDER BY p.data_conclusione DESC;
+        `;
+
+        const result = await pool.query(query, [idUtente]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Nessuna prenotazione precedente trovata per questo utente.' });
+        }
+
+        res.status(200).json(result.rows);
+    } catch (err) {
+        console.error('Errore nel recupero delle prenotazioni precedenti:', err);
+        res.status(500).send('Errore nel recupero delle prenotazioni precedenti.');
+    }
 });
