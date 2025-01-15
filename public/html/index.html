@@ -10,14 +10,21 @@
     <title>Biblioteca</title>
 </head>
 <body>
+    
     <nav>
         <img src="../file/Bibliodino.png" id="dino" alt="Logo">
         <audio id="audioPlayer" src="../file/Rawr.mp3"></audio>
         <h3>BIBLIOSAURO</h3>
-        <a href="../html/index.html">Biblioteca</a>
-        <a href="../html/statistiche.html" id="stats">Statistiche</a>
-        <a href="../html/about-us.html">About Us</a>
-        <a href="../html/login.html" id="login-button" class="logout">Login</a>
+        <div class="burger-menu">
+        <div class="burger" id="burger">
+            <i class="fa-solid fa-bars fa-2xl" style="color: #e4e3d7;padding: auto;"></i>
+        </div>
+        <div class="dropdown-menu" id="menu">
+            <a href="../html/index.html">Biblioteca</a>
+            <a href="../html/statistiche.html" id="stats">Statistiche</a>
+            <a href="../html/about-us.html">About Us</a>
+            <a href="../html/login.html" id="login-button" class="logout">Login</a>
+        </div>
     </nav>
     <aside>
         <img src="../file/Bibliodino.png" id="dino" alt="Logo">
@@ -270,6 +277,7 @@
 
 
     <script src="../js/home.js"></script>
+    <script src="../js/script.js"></script>
 </body>
 <footer><p>&copy; 2024 ISII Marconi - Project Bibliosauro. All rights reserved.</p> </footer>
 
