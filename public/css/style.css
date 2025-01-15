@@ -422,5 +422,5 @@ header h1{
         margin: 0;
     }
     #login-button, #logout-button, .logout, .login{
-        position:initial;
+        position:initial;}
 }
