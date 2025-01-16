@@ -2,6 +2,8 @@
 const limit = 10;
 let currentPageAttive = 1;
 let currentPagePrecedenti = 1;
+const user = JSON.parse(localStorage.getItem("user"));
+id_utente=user.id_utente;
 
 function renderPagination(total, currentPage, onPageChange) {
     const totalPages = Math.ceil(total / limit);
@@ -19,63 +21,137 @@ function renderPagination(total, currentPage, onPageChange) {
     return paginationContainer;
 }
 
+
 function loadPrenotazioniAttive(page) {
-    $.get(`/api/prenotazioni/attive/:${id_utente}?page=${page}&limit=${limit}`, function (data) {
-        const idUtente=JSON.parse(localStorage.getItem("id_utente"));
-        const attiveTable = $('#prenotazioniAttive tbody');
-        attiveTable.empty();
+    const id_utente = user?.id_utente; // Verifica che l'utente sia autenticato
+    if (!id_utente) {
+        console.error("ID utente non trovato. L'utente potrebbe non essere autenticato.");
+        return;
+    }
 
-        data.rows.forEach(row => {
-            attiveTable.append(`
-                <tr>
-                    <td>${row.id_prestito}</td>
-                    <td>${row.libro}</td>
-                    <td>${row.data_inizio.slice(0, 10).split('-').reverse().join('/')}</td>
-                    <td>${row.data_scadenza.slice(0, 10).split('-').reverse().join('/')}</td>
-                </tr>
-            `);
-        });
+    $.ajax({
+        url: `/api/prenotazioni/attive/${id_utente}`,
+        method: "GET",
+        data: { page, limit }, // Parametri query
+        success: function (data) {
+            const attiveTable = $('#prenotazioniAttive tbody');
+            attiveTable.empty();
 
-        $('#attivePagination').empty().append(
-            renderPagination(data.total, page, (newPage) => {
-                currentPageAttive = newPage;
-                loadPrenotazioniAttive(newPage);
-            })
-        );
+            // Se non ci sono prenotazioni attive
+            if (!data.rows || data.rows.length === 0) {
+                $('#prenotazioniAttive').html('<p class="no-data">Nessuna prenotazione attiva trovata.</p>');
+                $('#attivePagination').empty(); // Rimuove la paginazione
+                return;
+            }
+
+            // Popola la tabella con i dati ricevuti
+            data.rows.forEach(row => {
+                attiveTable.append(`
+                    <tr>
+                        <td>${row.id_prestito}</td>
+                        <td>${row.libro}</td>
+                        <td>${row.data_inizio.slice(0, 10).split('-').reverse().join('/')}</td>
+                        <td>${row.data_scadenza.slice(0, 10).split('-').reverse().join('/')}</td>
+                        <td>
+                            <a href="#" class="restituisci-link" data-id="${row.id_prestito}">Restituisci</a>
+                        </td>
+                    </tr>
+                `);
+            });
+
+            // Aggiungi l'evento click per i link "Restituisci"
+            $('.restituisci-link').click(function (e) {
+                e.preventDefault(); // Previene il comportamento predefinito del link
+                const idPrestito = $(this).data('id');
+                restituisciLibro(idPrestito);
+            });
+
+            $('#attivePagination').empty().append(
+                renderPagination(data.total, page, (newPage) => {
+                    currentPageAttive = newPage;
+                    loadPrenotazioniAttive(newPage);
+                })
+            );
+        },
+        error: function (xhr, status, error) {
+            console.error("Errore durante il caricamento delle prenotazioni attive:", error);
+            const attiveTable = $('#prenotazioniAttive tbody');
+            attiveTable.empty();
+            attiveTable.append('<tr><td colspan="5">Errore durante il caricamento delle prenotazioni attive.</td></tr>');
+        }
     });
 }
+
+
 
 function loadPrenotazioniPrecedenti(page) {
-    $.get(`/api/prenotazioni/precedenti?page=${page}&limit=${limit}`, function (data) {
-        const precedentiTable = $('#prenotazioniPrecedenti tbody');
-        precedentiTable.empty();
+    const id_utente = user?.id_utente; // Verifica che l'utente sia autenticato
+    if (!id_utente) {
+        console.error("ID utente non trovato. L'utente potrebbe non essere autenticato.");
+        return;
+    }
 
-        data.rows.forEach(row => {
-            precedentiTable.append(`
-                <tr>
-                    <td>${row.id_prestito}</td>
-                    <td>${row.libro}</td>
-                    <td>${row.data_inizio.slice(0, 10).split('-').reverse().join('/')}</td>
-                    <td>${row.data_conclusione.slice(0, 10).split('-').reverse().join('/')}</td>
-                </tr>
-            `);
-        });
+    $.ajax({
+        url: `/api/prenotazioni/precedenti/${id_utente}`,
+        method: "GET",
+        data: { page, limit }, // Parametri query
+        success: function (data) {
+            const attiveTable = $('#prenotazioniPrecedenti tbody');
+            attiveTable.empty();
+            
+            if (!data.rows || data.rows.length === 0) {
+                $('#prenotazioniPrecedenti').html('<p class="no-data">Nessuna prenotazione precedente trovata.</p>');
+                $('#precedentiPagination').empty(); // Rimuove la paginazione se non ci sono risultati
+                return;
+            }
+            data.rows.forEach(row => {
+                attiveTable.append(`
+                    <tr>
+                        <td>${row.id_prestito}</td>
+                        <td>${row.libro}</td>
+                        <td>${row.data_inizio.slice(0, 10).split('-').reverse().join('/')}</td>
+                        <td>${row.data_scadenza.slice(0, 10).split('-').reverse().join('/')}</td>
+                    </tr>
+                `);
+            });
 
-        $('#precedentiPagination').empty().append(
-            renderPagination(data.total, page, (newPage) => {
-                currentPagePrecedenti = newPage;
-                loadPrenotazioniPrecedenti(newPage);
-            })
-        );
+            $('#attivePagination').empty().append(
+                renderPagination(data.total, page, (newPage) => {
+                    currentPageAttive = newPage;
+                    loadPrenotazioniAttive(newPage);
+                })
+            );
+        },
+        error: function (xhr, status, error) {
+            console.error("Errore durante il caricamento delle prenotazioni attive:", error);
+        }
     });
 }
+
+function restituisciLibro(idPrestito) {
+    $.ajax({
+        url: `/api/restituisci/${idPrestito}`,
+        method: "PUT",
+        success: function () {
+            alert("Libro restituito con successo!");
+            loadPrenotazioniAttive(currentPageAttive); // Ricarica le prenotazioni attive
+        },
+        error: function (xhr, status, error) {
+            console.error("Errore durante la restituzione del libro:", error);
+            alert("Errore durante la restituzione del libro. Riprova più tardi.");
+        }
+    });
+}
+
+
+
 
 $(document).ready(function () {
     loadPrenotazioniAttive(currentPageAttive);
     loadPrenotazioniPrecedenti(currentPagePrecedenti);
 });
 
-const user = JSON.parse(localStorage.getItem("user"));
+
 
 if (user) {
     console.log("Dati dell'utente autenticato:", user);
