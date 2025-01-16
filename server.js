@@ -91,13 +91,13 @@ app.get('/api/libri', async (req, res) => {
         if (ordine === '+alfa') {
             queryText += ' ORDER BY l.titolo DESC';
         } else if (ordine === '-alfa') {
-            queryText += ' ORDER BY l.popolarita ASC';
+            queryText += ' ORDER BY l.titolo ASC';
         } else if (ordine === '+popolare') {
             queryText += ' ORDER BY l.popolarita DESC';
         } else if (ordine === '-popolare') {
             queryText += ' ORDER BY l.popolarita ASC';
         }else if (ordine === '+anno') {
-            queryText += ' ORDER BY l.popolarita DESC';
+            queryText += ' ORDER BY l.id_libro DESC';
         } else {
             queryText += ' ORDER BY l.id_libro ASC';
         }

@@ -263,7 +263,7 @@ footer{
     background-color: white;
     margin: 5% auto 0;
     padding: 20px;
-    min-width: 300px;
+    min-width: 500px;
     border-radius: 25px;
     background-color: #ca3e6b;
     width: 30%;
@@ -275,7 +275,7 @@ footer{
     background-color: white;
     margin: 2% auto 0;
     padding: 20px;
-    min-width: 300px;
+    min-width: 500px;
     border-radius: 25px;
     background-color: #9fd1cb;
     width: 30%;
@@ -423,4 +423,27 @@ header h1{
     }
     #login-button, #logout-button, .logout, .login{
         position:initial;}
+    .libro{
+        display:grid;
+        width: 300px;
+        margin: 10px auto;
+    }
+    .libro img{
+        margin: auto;
+    }
+    .mobileForm{
+        padding: 0 40px;
+    }
+    .login-content{
+        width: 80%;
+        padding: 20px 10px;
+        margin: 80px auto;
+        min-width: none;    
+    }
+    .register-content{
+        width: 80%;
+        padding: 20px 10px;
+        margin: 80px auto;
+        min-width: none;    
+    }
 }
