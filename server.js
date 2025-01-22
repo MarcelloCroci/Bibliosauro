@@ -535,55 +535,33 @@ app.get('/api/prenotazioni/precedenti/:id_utente', async (req, res) => {
 app.put('/api/restituisci/:id_prestito', async (req, res) => {
     const { id_prestito } = req.params;
 
-    if (!id_prestito) {
-        console.error("ID prestito non fornito.");
-        return res.status(400).json({ error: "ID prestito non fornito." });
-    }
-
     try {
-        console.log(`Inizio restituzione per ID prestito: ${id_prestito}`);
-
-        // Recupera il prestito
-        const checkQuery = `
-            SELECT id_libro 
-            FROM prestiti 
-            WHERE id_prestito = $1 AND restituito = false;
+        // Aggiorna la prenotazione per indicare che è stata restituita e imposta la data di conclusione a oggi
+        const updateQuery = `
+            UPDATE prestiti
+            SET restituito = true, data_scadenza = CURRENT_DATE
+            WHERE id_prestito = $1
         `;
-        const result = await pool.query(checkQuery, [id_prestito]);
+        await pool.query(updateQuery, [id_prestito]);
 
-        if (result.rows.length === 0) {
-            console.error("Prestito non trovato o già restituito.");
-            return res.status(404).json({ error: "Prestito non trovato o già restituito." });
-        }
-
-        const id_libro = result.rows[0].id_libro;
-        console.log(`Libro associato al prestito: ${id_libro}`);
-
-        // Aggiorna il prestito come restituito
-        const updatePrestitoQuery = `
-            UPDATE prestiti 
-            SET restituito = true, data_conclusione = NOW() 
-            WHERE id_prestito = $1;
+        // Incrementa la quantità del libro restituito
+        const updateBookQuery = `
+            UPDATE libri
+            SET quantita = quantita + 1
+            WHERE id_libro = (
+                SELECT id_libro
+                FROM prestiti
+                WHERE id_prestito = $1
+            )
         `;
-        await pool.query(updatePrestitoQuery, [id_prestito]);
-        console.log("Prestito aggiornato come restituito.");
+        await pool.query(updateBookQuery, [id_prestito]);
 
-        // Incrementa la quantità del libro
-        const updateLibroQuery = `
-            UPDATE libri 
-            SET quantita = quantita + 1, disponibile = true 
-            WHERE id_libro = $1;
-        `;
-        await pool.query(updateLibroQuery, [id_libro]);
-        console.log("Quantità del libro aggiornata.");
-
-        res.status(200).json({ message: "Libro restituito con successo." });
+        res.status(200).send('Prenotazione restituita con successo e data aggiornata.');
     } catch (err) {
-        console.error("Errore durante la restituzione del libro:", err);
-        res.status(500).json({ error: "Errore interno del server." });
+        console.error('Errore durante la restituzione della prenotazione:', err);
+        res.status(500).send('Errore durante la restituzione della prenotazione.');
     }
 });
-
 
 
 

@@ -52,18 +52,8 @@ function loadPrenotazioniAttive(page) {
                         <td>${row.libro}</td>
                         <td>${row.data_inizio.slice(0, 10).split('-').reverse().join('/')}</td>
                         <td>${row.data_scadenza.slice(0, 10).split('-').reverse().join('/')}</td>
-                        <td>
-                            <a href="#" class="restituisci-link" data-id="${row.id_prestito}">Restituisci</a>
-                        </td>
                     </tr>
                 `);
-            });
-
-            // Aggiungi l'evento click per i link "Restituisci"
-            $('.restituisci-link').click(function (e) {
-                e.preventDefault(); // Previene il comportamento predefinito del link
-                const idPrestito = $(this).data('id');
-                restituisciLibro(idPrestito);
             });
 
             $('#attivePagination').empty().append(
@@ -127,22 +117,6 @@ function loadPrenotazioniPrecedenti(page) {
         }
     });
 }
-
-function restituisciLibro(idPrestito) {
-    $.ajax({
-        url: `/api/restituisci/${idPrestito}`,
-        method: "PUT",
-        success: function () {
-            alert("Libro restituito con successo!");
-            loadPrenotazioniAttive(currentPageAttive); // Ricarica le prenotazioni attive
-        },
-        error: function (xhr, status, error) {
-            console.error("Errore durante la restituzione del libro:", error);
-            alert("Errore durante la restituzione del libro. Riprova più tardi.");
-        }
-    });
-}
-
 
 
 
