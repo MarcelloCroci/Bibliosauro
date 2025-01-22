@@ -433,6 +433,138 @@ app.get('/api/statistiche/libri', async (req, res) => {
 });
 
 
+// Endpoint per ottenere le prenotazioni attive di un singolo utente con paginazione
+app.get('/api/prenotazioni/attive/:id_utente', async (req, res) => {
+    const { id_utente } = req.params;
+    const { page = 1, limit = 10 } = req.query; // Paginazione con valori di default
+    const offset = (page - 1) * limit;
+
+    if (!id_utente) {
+        return res.status(400).json({ error: "ID utente non fornito." });
+    }
+
+    try {
+        // Query per ottenere le prenotazioni attive
+        const query = `
+            SELECT 
+                p.id_prestito, 
+                l.titolo AS libro, 
+                p.data_inizio, 
+                p.data_scadenza
+            FROM prestiti p
+            JOIN libri l ON p.id_libro = l.id_libro
+            WHERE p.id_utente = $1 AND p.restituito = false
+            ORDER BY p.data_scadenza ASC
+            LIMIT $2 OFFSET $3;
+        `;
+
+        const countQuery = `
+            SELECT COUNT(*) AS total
+            FROM prestiti p
+            WHERE p.id_utente = $1 AND p.restituito = false;
+        `;
+
+        const [result, countResult] = await Promise.all([
+            pool.query(query, [id_utente, limit, offset]),
+            pool.query(countQuery, [id_utente])
+        ]);
+
+        const total = parseInt(countResult.rows[0].total, 10);
+        res.json({
+            rows: result.rows,
+            total,
+            currentPage: parseInt(page, 10),
+            totalPages: Math.ceil(total / limit)
+        });
+    } catch (err) {
+        console.error('Errore nel recupero delle prenotazioni attive:', err);
+        res.status(500).json({ error: 'Errore nel recupero delle prenotazioni attive.' });
+    }
+});
+
+
+// Endpoint per ottenere le prenotazioni attive di un singolo utente con paginazione
+app.get('/api/prenotazioni/precedenti/:id_utente', async (req, res) => {
+    const { id_utente } = req.params;
+    const { page = 1, limit = 10 } = req.query; // Paginazione con valori di default
+    const offset = (page - 1) * limit;
+
+    if (!id_utente) {
+        return res.status(400).json({ error: "ID utente non fornito." });
+    }
+
+    try {
+        // Query per ottenere le prenotazioni attive
+        const query = `
+            SELECT 
+                p.id_prestito, 
+                l.titolo AS libro, 
+                p.data_inizio, 
+                p.data_scadenza
+            FROM prestiti p
+            JOIN libri l ON p.id_libro = l.id_libro
+            WHERE p.id_utente = $1 AND p.restituito = true
+            ORDER BY p.data_scadenza ASC
+            LIMIT $2 OFFSET $3;
+        `;
+
+        const countQuery = `
+            SELECT COUNT(*) AS total
+            FROM prestiti p
+            WHERE p.id_utente = $1 AND p.restituito = true;
+        `;
+
+        const [result, countResult] = await Promise.all([
+            pool.query(query, [id_utente, limit, offset]),
+            pool.query(countQuery, [id_utente])
+        ]);
+
+        const total = parseInt(countResult.rows[0].total, 10);
+        res.json({
+            rows: result.rows,
+            total,
+            currentPage: parseInt(page, 10),
+            totalPages: Math.ceil(total / limit)
+        });
+    } catch (err) {
+        console.error('Errore nel recupero delle prenotazioni attive:', err);
+        res.status(500).json({ error: 'Errore nel recupero delle prenotazioni attive.' });
+    }
+});
+
+app.put('/api/restituisci/:id_prestito', async (req, res) => {
+    const { id_prestito } = req.params;
+
+    try {
+        // Aggiorna la prenotazione per indicare che è stata restituita e imposta la data di conclusione a oggi
+        const updateQuery = `
+            UPDATE prestiti
+            SET restituito = true, data_scadenza = CURRENT_DATE
+            WHERE id_prestito = $1
+        `;
+        await pool.query(updateQuery, [id_prestito]);
+
+        // Incrementa la quantità del libro restituito
+        const updateBookQuery = `
+            UPDATE libri
+            SET quantita = quantita + 1
+            WHERE id_libro = (
+                SELECT id_libro
+                FROM prestiti
+                WHERE id_prestito = $1
+            )
+        `;
+        await pool.query(updateBookQuery, [id_prestito]);
+
+        res.status(200).send('Prenotazione restituita con successo e data aggiornata.');
+    } catch (err) {
+        console.error('Errore durante la restituzione della prenotazione:', err);
+        res.status(500).send('Errore durante la restituzione della prenotazione.');
+    }
+});
+
+
+
 
 
 // Avvio del server

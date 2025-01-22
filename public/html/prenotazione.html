@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="icon" type="image/x-icon" href="../file/Bibliodino.png">
-    <title>Biblioteca</title>
+    <title>Prenotazioni Utente</title>
 </head>
 <body>
     <nav>
@@ -38,61 +38,46 @@
     </aside>
     
     <section>
-        
-        <h1>Statistiche</h1>
-    
-        <h2>Utenti con Prestiti</h2>
-        <table id="utentiPrestiti">
-            <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Cognome</th>
-                <th>Ruolo</th>
-                <th>Libro Prestato</th>
-                <th>Prestito inizia</th>
-                <th>Prestito finisce</th>
-                <th>Restituzione</th>
-            </tr>
-        </thead>
-        
-            <tbody>
-                <!-- Dati dinamici -->
-            </tbody>
-        </table>
-        <div id="prestitiPagination"></div>
-        <hr>
-        
-        <h2>Dettagli dei Libri</h2>
-        <table id="dettagliLibri">
+        <h1>Prenotazioni Utente</h1>
+
+        <h2>Prenotazioni Attive</h2>
+        <table id="prenotazioniAttive">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Titolo</th>
-                    <th>Autore</th>
-                    <th>Anno</th>
-                    <th>ISBN</th>
-                    <th>Quantità</th>
-                    <th>Popolarità</th>
-                    <th>Disponibile</th>
-                    <th>Casa Editrice</th>
-                    <th>Generi</th>
+                    <th>ID Prenotazione</th>
+                    <th>Libro</th>
+                    <th>Data Inizio</th>
+                    <th>Data Scadenza</th>
                 </tr>
             </thead>
             <tbody>
                 <!-- Dati dinamici -->
             </tbody>
         </table>
-        <div id="libriPagination"></div>
-    </table>
+        <div id="attivePagination"></div>
 
+        <hr>
+
+        <h2>Prenotazioni Precedenti</h2>
+        <table id="prenotazioniPrecedenti">
+            <thead>
+                <tr>
+                    <th>ID Prenotazione</th>
+                    <th>Libro</th>
+                    <th>Data Inizio</th>
+                    <th>Data Conclusione</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dati dinamici -->
+            </tbody>
+        </table>
+        <div id="precedentiPagination"></div>
+        <hr>
     </section>
 
-
-
-
-    <script src="../js/statistiche.js"></script>
+    <script src="../js/prenotazione.js"></script>
     <script src="../js/script.js"></script>
 </body>
-<footer><p>&copy; 2024 ISII Marconi - Project Bibliosauro. All rights reserved.</p> </footer>
-
+<footer><p>&copy; 2024 ISII Marconi - Project Bibliosauro. All rights reserved.</p></footer>
 </html>

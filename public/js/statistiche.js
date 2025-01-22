@@ -35,8 +35,10 @@ function loadPrestiti(page) {
                     <td>${row.titolo || 'Nessun libro in prestito'}</td>
                     <td>${DataPrestato}</td>
                     <td>${DataRiconsegna}</td>
+                    <td><button class="restituzione-btn" data-id="${row.id_prestito}">Restituisci</button></td>
                 </tr>
             `);
+            
         });
 
         $('#prestitiPagination').empty().append(
@@ -82,4 +84,23 @@ $(document).ready(function () {
     loadPrestiti(currentPagePrestiti);
     loadLibri(currentPageLibri);
 });
+
+//pressione bottone
+$(document).on('click', '.restituzione-btn', function () {
+    const prestitoId = $(this).data('id');
+
+    $.ajax({
+        url: `/api/restituisci/${prestitoId}`,
+        method: 'PUT',
+        success: function () {
+            alert('Prenotazione restituita con successo!');
+            loadPrestiti(currentPagePrestiti); // Ricarica la tabella
+        },
+        error: function (err) {
+            alert('Errore durante la restituzione della prenotazione.');
+            console.error(err);
+        }
+    });
+});
+
 
