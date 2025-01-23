@@ -563,6 +563,31 @@ app.put('/api/restituisci/:id_prestito', async (req, res) => {
     }
 });
 
+app.get('/api/utenti', async (req, res) => {
+    try {
+        const { page = 1, limit = 10 } = req.query;
+        const offset = (page - 1) * limit;
+
+        const query = `
+            SELECT id_utente, nome, cognome, email, ruolo
+            FROM utenti
+            LIMIT $1 OFFSET $2
+        `;
+        const countQuery = `SELECT COUNT(*) AS total FROM utenti`;
+
+        const [result, countResult] = await Promise.all([
+            pool.query(query, [limit, offset]),
+            pool.query(countQuery)
+        ]);
+
+        res.json({ rows: result.rows, total: countResult.rows[0].total });
+    } catch (err) {
+        console.error('Errore nel recupero degli utenti:', err);
+        res.status(500).send('Errore nel recupero degli utenti');
+    }
+});
+
+
 
 
 
