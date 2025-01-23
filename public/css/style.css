@@ -450,3 +450,14 @@ header h1{
         min-width: none;    
     }
 }
+@media (max-width: 500px) {
+    #cercaID{
+        width: 55%;
+        margin: auto;
+    }
+    .search{
+        float: right;
+        position: absolute;
+        margin-left: 5px;
+    }
+}
