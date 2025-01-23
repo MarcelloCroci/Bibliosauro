@@ -79,10 +79,44 @@ function loadLibri(page) {
         );
     });
 }
+let currentPageUtenti = 1;
+
+function renderUtenti(data) {
+    const utentiTable = $('#utentiTable tbody');
+    utentiTable.empty();
+
+    data.rows.forEach(utente => {
+        utentiTable.append(`
+            <tr>
+                <td>${utente.nome}</td>
+                <td>${utente.cognome}</td>
+                <td>${utente.email}</td>
+                <td>${utente.ruolo}</td>
+            </tr>
+        `);
+    });
+}
+
+function loadUtenti(page) {
+    $.get(`/api/utenti?page=${page}&limit=10`, function (data) {
+        renderUtenti(data);
+
+        const totalPages = Math.ceil(data.total / 10);
+        const pagination = $('<div class="pagination"></div>');
+        for (let i = 1; i <= totalPages; i++) {
+            const btn = $(`<button>${i}</button>`);
+            if (i === page) btn.attr('disabled', true);
+            btn.click(() => loadUtenti(i));
+            pagination.append(btn);
+        }
+        $('#utentiPagination').html(pagination);
+    });
+}
 
 $(document).ready(function () {
     loadPrestiti(currentPagePrestiti);
     loadLibri(currentPageLibri);
+    loadUtenti(currentPageUtenti);
 });
 
 //pressione bottone
