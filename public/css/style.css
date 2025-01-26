@@ -369,6 +369,7 @@ header h1{
   }
   .dropdown-menu {
     position: absolute;
+    z-index: 100;
     top: 60px;
     right: 20px;
     background-color: #ca3a68;
@@ -438,16 +439,16 @@ header h1{
         padding: 0 40px;
     }
     .login-content{
-        width: 80%;
+        width: 90%;
         padding: 20px 10px;
         margin: 80px auto;
-        min-width: none;    
+        min-width: 200px;    
     }
     .register-content{
-        width: 80%;
+        width: 90%;
         padding: 20px 10px;
-        margin: 80px auto;
-        min-width: none;    
+        margin: 10px auto;
+        min-width: 200px;    
     }
 }
 @media (max-width: 500px) {
