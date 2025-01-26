@@ -37,6 +37,6 @@ if (user) {
 } else {
     console.log("Nessun utente autenticato.");
     // Nascondi i bottoni per la modifica e aggiunta
-    document.querySelectorAll("#edit-submit, .add, #prenota-submit, #stats").forEach((button) => {
+    document.querySelectorAll("#edit-submit, .add, #prenota-submit, #pren, #stats").forEach((button) => {
         button.style.display = "none";});
 }
