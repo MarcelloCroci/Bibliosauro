@@ -216,7 +216,7 @@ footer{
     width: 30%;
     margin-top: 50px;
     text-align: center;
-    min-width: 400px;
+    min-width: 350px;
 }
 .modal-content img{
     width: 250px;
@@ -449,6 +449,9 @@ header h1{
         padding: 20px 10px;
         margin: 10px auto;
         min-width: 200px;    
+    }
+    .right .filter{
+        width: 160px;
     }
 }
 @media (max-width: 500px) {
